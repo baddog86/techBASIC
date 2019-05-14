@@ -1,0 +1,258 @@
+system.showgraphics
+dim turn as integer
+dim win as INTEGER 
+oo= 0
+ot=0
+oth=0
+ton=0
+tt=0
+tth=0
+tho=0
+tht=0
+thth=0
+win = 0
+
+call redraw
+sub redraw
+ graphics.setColor(1,1,1)
+ graphics.fillRect(0,0,750,750)
+ graphics.setColor(0,0,0)
+ graphics.drawrect(95,95,95,95)
+ graphics.drawrect(200,95,95,95)
+ graphics.drawRect(305,95,95,95)
+ graphics.drawrect(95,200,95,95)
+ graphics.drawrect(200,200,95,95)
+ graphics.drawRect(305,200,95,95)
+ graphics.drawrect(95,305,95,95)
+ graphics.drawrect(200,305,95,95)
+ graphics.drawRect(305,305,95,95)
+ graphics.fillRect(450,200,95,95)
+ graphics.setColor(1,0,0)
+ graphics.fillRect(450,305,95,95)
+ graphics.setColor(1,1,1)
+ Graphics.setfont("comicsans", 13, 1)
+ graphics.drawtext(460,347,0,"Current turn")
+ graphics.setColor(1,1,1)
+ Graphics.setfont("comicsans", 13, 1)
+ graphics.drawtext(455,247,0,"tap to Restart")
+ graphics.setColor(0,0,0)
+ turn = 1
+end sub
+
+sub tap (e AS event) 
+point = e.where  
+place = point(1,1)  
+place2 = point(1,2) 
+
+IF place > 450 and place < 545 and place2 > 200 and place2 <295 THEN 
+ oo= 0
+ ot=0
+ oth=0
+ ton=0
+ tt=0
+ tth=0
+ tho=0
+ tht=0
+ thth=0
+ win = 0
+ call redraw
+end if
+
+IF place > 95 and place < 190 and place2 > 95 and place2 <190 and win = 0 THEN 
+ if turn = 1 and oo = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(95,95,95,95)
+  turn = 2
+  oo=1
+ end if
+ if oo=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(95,95,95,95)
+  turn = 1
+  oo=2
+ end if
+end if
+
+IF place > 200 and place < 295 and place2 > 95 and place2 <190 and win =0 THEN 
+ if turn = 1 and ot = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(200,95,95,95)
+  turn = 2
+  ot=1
+ end if
+ if ot=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(200,95,95,95)
+  turn = 1
+  ot=2
+ end if
+end if
+
+IF place > 305 and place < 400 and place2 > 95 and place2 <190 and win = 0 THEN 
+ if turn = 1 and oth = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(305,95,95,95)
+  turn = 2
+  oth=1
+ end if
+ if oth=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(305,95,95,95)
+  turn = 1
+  oth=2
+ end if
+end if
+
+IF place > 95 and place < 190 and place2 > 200 and place2 <295 and win = 0 THEN 
+ if turn = 1 and ton = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(95,200,95,95)
+  turn = 2
+  ton=1
+ end if
+ if ton=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(95,200,95,95)
+  turn = 1
+  ton=2
+ end if
+end if
+
+IF place > 200 and place < 295 and place2 > 200 and place2 <295 and win = 0 THEN 
+ if turn = 1 and tt = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(200,200,95,95)
+  turn = 2
+  tt=1
+ end if
+ if tt=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(200,200,95,95)
+  turn = 1
+  tt=2
+ end if
+end if
+
+IF place > 305 and place < 400 and place2 > 200 and place2 <295 and win = 0 THEN 
+ if turn = 1 and tth = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(305,200,95,95)
+  turn = 2
+  tth=1
+ end if
+ if tth=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(305,200,95,95)
+  turn = 1
+  tth=2
+ end if
+end if
+
+IF place > 95 and place < 190 and place2 > 305 and place2 <400 and win = 0 THEN 
+ if turn = 1 and tho = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(95,305,95,95)
+  turn = 2
+  tho=1
+ end if
+ if tho=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(95,305,95,95)
+  turn = 1
+  tho=2
+ end if
+end if
+
+IF place > 200 and place < 295 and place2 > 305 and place2 <400 and win = 0 THEN 
+ if turn = 1 and tht = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(200,305,95,95)
+  turn = 2
+  tht=1
+ end if
+ if tht=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(200,305,95,95)
+  turn = 1
+  tht=2
+ end if
+end if
+
+IF place > 305 and place < 400 and place2 > 305 and place2 <400 and win = 0 THEN 
+ if turn = 1 and thth = 0 then
+  graphics.setColor(1,0,0)
+  graphics.fillrect(305,305,95,95)
+  turn = 2
+  thth=1
+ end if
+ if thth=0 and turn = 2 then
+  graphics.setColor(0,0,1)
+  graphics.fillRect(305,305,95,95)
+  turn = 1
+  thth=2
+ end if
+end if
+call turndone
+end sub
+
+sub turndone
+Graphics.setfont("comicsans", 24, 1)
+ if oo = ot and ot = oth and oth = oo and oo+ot+oth > 0 then !top ltr
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+ system.wait(5)
+end if
+
+ if ton = tt and tt = tth and ton = tth and ton+tt+tth > 0 then !2nd row ltr
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+ 
+ if tho = tht and tht = thth and thth=tho and tho+tht+thth > 0 then !bottom ltr
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+
+ if oo = ton and tho = ton and oo=tho and tho+oo+ton > 0 then !lt2b
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+
+if ot = tt and tht = tt and ot=tht and ot+tht+tt > 0 then !mid t2b
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+ 
+if oth = tth and tth = thth and oth=thth and oth+thth+tth > 0 then !rt2b
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+ 
+if oo = tt and thth = tt and oo=thth and oo+thth+tt > 0 then !cross lt2rb
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+ 
+if oth = tt and tho = tt and oth=tho and oth+tho+tt > 0 then !cross rt2lb
+ graphics.drawText(475,175,0,"WIN")
+ win = 1
+end if
+
+if oo+ot+oth+ton+tt+tth+tho+tht+thth=13 and win = 0 then
+ graphics.drawText(475,175,0,"TIE")
+ win = 1
+end if
+
+if win = 0 then
+ if turn = 1 then
+  graphics.setColor(1,0,0)
+ end if
+ if turn = 2 then
+  graphics.setColor(0,0,1)
+ end if
+ graphics.fillRect(450,305,95,95)
+ graphics.setColor(1,1,1)
+ Graphics.setfont("comicsans", 13, 1)
+ graphics.drawtext(460,347,0,"Current turn")
+end if
+end sub                          
