@@ -1,0 +1,86 @@
+system.showgraphics
+dim r as INTEGER 
+dim time as double
+react=0
+call rewrite
+sub rewrite 
+graphics.setColor(0,0,0)
+graphics.fillRect(275,275,100,100)!middle
+graphics.setcolor(1,1,1)
+graphics.setfont("kefa",12,1)
+graphics.drawtext(300,325,0,"tap here ")
+graphics.drawtext(300,350,0,"to start test")
+graphics.drawText(280,285,0,"reaction in ms")
+graphics.drawText(300,300,0,str(react))
+graphics.setColor(1,1,1)
+graphics.fillRect(375,275,100,100)
+graphics.setcolor(0,0,0)
+graphics.fillrect(100,100,50,50)!top left
+graphics.fillRect(500,100,50,50)!top right
+graphics.fillRect(100,500,50,50)!bottom left
+graphics.fillRect(500,500,50,50)!bottom right
+end sub
+sub main !called when tap on home
+yeet=rnd(1) !which box will be red
+var=rnd(1)*2.5 !how long you have to wait
+system.wait(var)
+graphics.setcolor(1,0,0)
+if yeet<0.25 then
+ r=1
+ graphics.fillrect(100,100,50,50)!top left
+end if
+if 0.25<yeet and yeet<0.50 then
+ r=2
+ graphics.fillRect(500,100,50,50)!top right
+end if
+
+if 0.50<yeet and yeet<0.75 then
+ r=3
+ graphics.fillRect(100,500,50,50)!bottom left
+end if
+
+if 0.75<yeet and yeet<1 then
+ r=4
+ graphics.fillRect(500,500,50,50)
+ 
+end if
+time = system.ticks !starts timer but in seconds
+end sub
+ 
+sub tap (e AS event)
+point = e.where 
+place = point(1,1) 
+place2 = point(1,2) 
+
+!top left
+ if r=1 and place > 100 and place < 150 and place2 > 100 and place2 <150 THEN 
+  r=0
+  react= ((system.ticks-time)*1000)-150 !multiplies by 1000 to get ms
+  call rewrite !rewrites home screen
+ end if
+!top right
+ if r=2 and place > 500 and place < 550 and place2 > 100 and place2 <150 THEN 
+  r=0
+  react= ((system.ticks-time)*1000)-150
+  call rewrite
+ end if
+ !bottom left
+ if r=3 and place > 100 and place < 150 and place2 > 500 and place2 <550 THEN 
+  r=0
+  react= ((system.ticks-time)*1000)-150
+  call rewrite
+ end if
+ !borrom right
+ if r=4 and place > 500 and place < 550 and place2 > 500 and place2 <550 THEN 
+  r=0
+  react= ((system.ticks-time)*1000)-150
+  call rewrite
+ end if
+ 
+ !starts the test
+IF r = 0 and place > 275 and place < 375 and place2 > 275 and place2 <375 THEN 
+ graphics.setColor(0,1,0)
+ graphics.fillRect(275,275,100,100)
+ call main
+end if
+end sub                                        
