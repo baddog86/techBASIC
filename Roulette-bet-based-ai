@@ -1,0 +1,265 @@
+system.clearconsole 
+dim gw as INTEGER 
+dim bw as INTEGER 
+dim rw AS INTEGER 
+dim gl as INTEGER 
+dim bl as INTEGER 
+dim rl AS INTEGER 
+dim gen as INTEGER 
+dim profit as INTEGER 
+dim g AS INTEGER 
+dim megagen AS INTEGER 
+dim megaprofit AS INTEGER 
+let s = 0
+let megagen=0
+let megaprofit=0
+let bw = 300
+let rw =0
+let gw = 1
+let bl = 0
+let rl = 2
+let gl = 0
+pbet = 0
+pmoney=0
+mrw = 0
+mrl =0
+mgw = 0
+mgl = 0
+mbw = 0
+mbl = 0
+yt=0
+pg=0
+profit = 0
+x=1
+system.clearConsole
+print"each gen is 1 games played"
+print"each profit is one game played, and on a profit the AI does not advance its game (it does learn however)"
+print"a mega gen is 30,000 gens, the variable for a gen bugs out at 30,000"
+print"a mega profit is 30,000 profits, a profit is 125 credit"
+print"the profit percentage needs a mega gen and mega profit to work reliably"
+print"recommended amount is 50000 anything higher takes multiple seconds to compute"
+print"anything lower then 2000 will be unseeable as it runs too fast"
+print"how many gens at a time?"
+input dogens
+call game
+
+sub game !top of betting
+54
+if profit > 30000 then
+ megaprofit= megaprofit+1
+ profit = 0
+end if
+
+if gen > 30000 then
+ megagen = megagen + 1
+ gen = 0
+end if
+
+if money >124 then
+ profit = profit + 1
+ money = 0
+ pg= pg-1
+end if
+
+!replaces to large intervals
+if mgw >10000 then
+ mbw=mbw/2
+ mrw=mrw/2
+ mbl=mbl/2
+ mrl=mrl/2
+ mgl=mgl/2
+end if
+
+
+if rw > 30000 then
+ mrw= mrw+1
+ rw = 0
+ yt=yt+1
+end if
+
+if rl > 30000 then
+ mrl= mrl+1
+ rl = 0
+ yt=yt+1
+end if
+
+if bw > 30000 then
+ mbw= mbw+1
+ bw = 0
+ yt=yt+1
+end if
+
+if bl > 30000 then
+ mbl= mbl+1
+ bl = 0
+ yt=yt+1
+end if
+
+if gw > 30000 then
+ mgw= mgw+1
+ yt=yt+1
+ gw = 0
+end if
+
+if gl > 30000 then
+ mgl= mgl+1
+ gl = 0
+ yt=yt+1
+end if
+
+if money <= 0 then
+ let money = 100
+ gen = gen + 1
+end if 
+!—————- AI
+
+!this is just in case not used
+let g = rnd(1)*3
+
+!now betting, it uses it win rate as a bet tool
+
+if money>pmoney then
+ win= win +1
+ else 
+ win = 0
+ bet = pbet - 1
+end if
+
+if win > 1 then
+ bet = pbet + 1
+end if
+
+if bet <1 then
+ bet = 1
+end if 
+
+
+pbet = bet
+pmoney = money
+!end of betting
+if gw < gl and rw <gw and bw < gw then
+ g = 1
+end if
+
+if rw < rl and bw <rw and gw < rw then
+ g = 2
+end if
+
+if bw < bl and rw <bw and gw < bw then
+ g = 3
+end if
+
+if g = 0 then
+ g = rnd(1)*4
+ if g <1 then
+ g = 1
+ end if
+if g >3 then
+  g =3
+ end if
+end if
+
+!if we have great data
+if yt>10 then
+ yt = 0
+ 
+ if mgw <= mgl and mrw <=mgw or mbw <= mgw then
+ g = 1
+end if
+
+ if mrw <= mrl and mbw <=mrw or mgw <= mrw then
+ g = 2
+end if
+
+if mbw <= mbl and mrw <=mbw or mgw <= mbw then
+ g = 3
+end if
+
+if mgw <= mgl and mrw <=mgw and mbw <= mgw then
+ g = 1
+end if
+
+ if mrw <= mrl and mbw <=mrw and mgw <= mrw then
+ g = 2
+end if
+
+if mbw <= mbl and mrw <=mbw and mgw <= mbw then
+ g = 3
+end if
+
+
+
+
+
+end if
+
+
+
+!ai done
+s = s + 1
+if s>dogens then
+if megagen >1 and megaprofit>0 then
+ percent = megaprofit/megagen
+else
+ percent = profit/gen
+end if
+
+system.clearConsole
+s = 0
+print"profits made " profit
+print"mega profits made " megaprofit
+print"profit percentage " percent
+PRINT "your current credit is " money
+print "your current gen is " gen
+print"mega gens completed is " megagen
+print"green value " mgw", "mgl
+print"red value " mrw", "mrl
+print"black value " mbw", "mbl
+print"AI chose " g " as its guess "
+print"AI chose " bet " as its bet "
+
+end if
+if g>0 then
+money = money - bet
+end if
+
+rng = rnd(1)*20
+
+
+
+
+if rng>18 then
+if g = 1 then
+ money=money+(bet*10) 
+ gw = gw + bet*10
+  else if rng > 18 then
+   gl = gl + bet
+end if
+end if
+
+if 1<rng and rng<9.5 then
+if g = 2 then
+ money=money+(bet*2)
+ rw = rw + bet*2
+   else if 0<rng and rng<9.5 then
+   rl = rl + bet
+end if
+end if
+
+if 9.5<rng and rng<=18 then
+if g = 3 then
+ money=money+(bet*2)
+ bw = bw + bet*2
+  else if 9.5<rng and rng<=18 then
+   bl = bl + bet
+end if
+end if
+
+
+goto 54
+
+
+
+
+
+end sub                 
