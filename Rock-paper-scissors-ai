@@ -1,0 +1,190 @@
+system.clearconsole
+!only one variable, its the score, it is reset on a loss but not a tie
+dim score as INTEGER 
+dim scissor as INTEGER 
+dim rock AS INTEGER 
+dim paper AS  INTEGER 
+dim rng AS INTEGER 
+let score = 0
+let rock = 0 !num 1
+let scissor = 2 !num 3
+let paper = 1 !num 2
+
+!main startup
+print"welcome to rock paper scissors "
+system.wait(0.5)
+system.clearConsole
+call game
+
+!the whole game is in a sub so it can be called back  
+sub game
+!this bit is selection of the human
+system.clearConsole
+PRINT "your score is " score
+print "please type “1” for rock, “2” for paper or ”3” for scissors"
+system.setKeyboardType(9)
+input guess
+if guess >3 or guess <1 then
+ system.clearConsole
+  if guess = 86 then
+   call graph
+  end if
+ print "invailid entry"
+ system.wait(2)
+ call game
+end if
+!now its the ai selection
+system.clearConsole
+
+!this x9 helpe with the math comparisons later
+
+!this just looks cool I guess, ai is too fast for it to be shown
+print "hmmmmm let me think"
+
+!————-————————————————-————-————————————————-————-————————————————- ai
+ai = 0
+
+!actual logic here
+
+if paper > rock and paper > scissor then !paper most common, might be paper
+ ai = 8!scissor
+end if
+
+if rock > paper and rock > scissor then !rock most common, might be rock
+ ai = 5!paper
+end if
+
+if scissor > paper and scissor > rock then !scissors is the most common, might be scissors
+ ai = 2!rock
+end if
+
+!used so the plyer doesnt abuse the system
+!if score > 1 then !basic incase system doesnt catch it, it should
+! ai = rnd(1)*10
+!end if
+if score > 0 and s <scissor and ai = 0 then !spam on scissors
+ ai=2
+ print ai
+end if
+
+if score > 0 and r <rock and ai = 0 then !spam on rock
+ ai = 5
+end if 
+
+if score > 0 and p <paper and ai = 2 then !spam on paper
+ ai = 8
+end if
+
+if ai = 0 then
+ ai = int(rnd(1)*10)
+end if
+
+
+!this gets previous round data stored for people who spam
+s = scissor
+r = rock
+p = paper
+
+!————-————————————————-————-————————————————-————-————————————————- end ai
+
+system.clearConsole
+!following ifs increase score of the different player options after AI chooses
+
+if guess = 1 then
+ rock = rock + 1
+end if
+
+if guess = 2 then
+ paper = paper + 1
+end if
+
+if guess = 3 then
+ scissor = scissor + 1
+ 
+end if 
+
+!this line could be used to cheat but not too severe.
+! so if your trying to play fair comment it out
+print ai":ai"
+
+!comment out the following line to not cheat, those will lead to easy cheating
+!print scissor":scissor" :print paper":paper" :print rock":rock"
+
+if ai<4 and guess = 2 THEN !human paper ai rock
+ print "computer chose rock"
+ score = score + 1
+ print"your score is " score
+ print"YOU WIN"
+ system.wait(3)
+ call game
+end if
+
+if ai<4 and guess = 1 then !both rock
+ print "you choose rock and the ai chose rock too"
+ print"TIE"
+ system.wait(3)
+ call game
+end if
+
+if 4<ai and ai<7 and guess = 3 then !ai paper human scissors
+ print "computer chose paper"
+ score = score + 1
+ print"your score is " score
+ print"YOU WIN"
+ system.wait(3)
+ call game
+end if
+  
+if 4<ai and ai<7 and guess = 2 then !both paper are choosen
+ print "you choose paper and the ai chose paper too"
+ print"TIE"
+ system.wait(3)
+ call game
+end if
+
+if 7<ai and ai<10 and guess = 1 then !ai scissors human rock
+ print "computer chose scissors"
+ score = score + 1
+ print"your score is " score
+ print"YOU WON"
+ system.wait(3)
+ call game
+end if
+
+if 7<ai and ai<10 and guess = 3 then !both scissors
+ print "you choose scissors and the ai chose scissors too"
+ print"TIE"
+ system.wait(3)
+ call game
+ else !this else means that the ai had to have won
+ print"your score was " score
+ print"the AI won, YOU LOST AGAIN "
+ let score = 0
+ system.wait(2)
+ call game
+end if
+
+end sub
+
+sub graph !easter egg, but moslty used to cheat or debug the system
+system.showGraphics
+if rock > 60 or paper >60 or scissor >60 then
+ mult = 5
+ else 
+ mult = 10
+end if
+
+graphics.setcolor(0,0,0,1)
+Graphics.setfont("comicsans", 18, 1)
+graphics.drawtext(10,100,1,"1:rock")
+graphics.drawtext(10,300,1,"2:paper")
+graphics.drawtext(10,500,1,"3:scissors")
+graphics.drawrect(100,0,0,750)
+graphics.setColor(1,0,0)
+graphics.fillrect(100,410,scissor*mult,190)
+graphics.setColor(0,1,0)
+graphics.fillRect(100,10,rock*mult,190)
+graphics.setColor(0,0,1)
+graphics.fillrect(100,210,paper*mult,190)
+system.wait(3)
+end sub                 
