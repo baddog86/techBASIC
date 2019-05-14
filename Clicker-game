@@ -1,0 +1,98 @@
+system.clearconsole
+system.showgraphics
+
+!setup when run
+let clicks = 0
+let mult = 1
+let fx = 0
+let x = 0
+let cs=0
+!still testing, should popup random text on screen on tap
+sub click
+Graphics.setColor(1,0,0)
+SELECT CASE nice
+case 1:Graphics.drawText(300,250,0,"nice")
+case 2:Graphics.drawText(300,250,0,"ok")
+case 3:Graphics.drawText(300,250,0,"good")
+end select
+end sub
+
+!every tap calls this to rewrite and make the button look nice to touch
+call main
+sub main 
+Graphics.setfont("comicsans", 12, 1)
+graphics.setColor(0,0,1)
+graphics.fillrect(275,400,175,50) !tap here
+graphics.fillrect(275,25,175,50) !clicks
+Graphics.setColor(1,1,1)
+Graphics.fillRect(300,45,125,25)
+graphics.setColor(1,0.25,0.5)
+graphics.drawtext(310,425,0, "tap here for plus 1 ") !tap text
+graphics.drawText(280,40,0,"your current click credits is")
+graphics.setColor(1,0,0,1)
+graphics.fillRect(275,75,174,325)!box in middle
+end sub
+
+call fourx
+!helps redraw a box
+sub fourx !draws the 4x box
+Graphics.setColor(0.5,0,1)
+Graphics.fillrect(50,50,150,50)
+end sub 
+!draws boxes for up grades
+!box for 2x mult
+Graphics.setColor(1,0.25,0.5)
+Graphics.drawText(65,65,0,"2x click credit per tap")
+Graphics.drawText(65,80,0, "costs 200 click credit") 
+!box for +10 clicks every 15 sec
+Graphics.setColor(0.5,0,1)
+Graphics.fillRect(500,50,150,50)
+Graphics.setColor(1.0,.25,0.5)
+Graphics.drawText(510,65,0,"10 clicks every 10% taps")
+Graphics.drawText(510,80,0,"costs 400 click credit")
+
+!tap event 
+sub tap (e AS event)
+point = e.where 
+place = point(1,1) 
+place2 = point(1,2) 
+
+!main counter
+IF place > 275 and place < 450 and place2 > 400 and place2 <450  THEN 
+ x=x+1
+  if x>9 then
+   if cs=100 then
+    clicks=clicks+10
+    print "yeet"
+    x=0
+   end if
+  end if
+ clicks = mult+clicks
+ call main
+ call click
+ Graphics.drawText(310,55,0,str(clicks))
+end if
+!4x multi
+if place > 50 and place < 200 and place2 > 50 and place2 < 100 then
+ if fx < 0.1 and clicks > 199 then
+  fx=1
+  clicks=clicks-200
+  Graphics.setColor(1,0,0)
+  Graphics.drawText(310,55,0,str(clicks))
+  mult=mult*2
+  call fourx
+  graphics.setColor(1,0.25,0.5)
+  Graphics.drawText(65,65,0,"2x multiplier is bought")
+   else
+ end if
+END IF 
+!10 clicks ramdomly added 
+if place > 500 and place < 650 and place2 > 50 and place2 < 100 and cs<0.1 and clicks>400 then
+ clicks = clicks-400
+ cs=100
+ Graphics.setColor(0.5,0,1)
+ Graphics.fillRect(500,50,150,50)
+ Graphics.setColor(1,0.25,0.5)
+ Graphics.drawText(510,80,0,"purchased")
+end if
+end sub                               
