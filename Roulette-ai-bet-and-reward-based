@@ -1,0 +1,244 @@
+system.clearconsole 
+dim gw as INTEGER 
+dim bw as INTEGER 
+dim rw AS INTEGER 
+dim gl as INTEGER 
+dim bl as INTEGER 
+dim rl AS INTEGER 
+dim gen as INTEGER 
+dim profit as INTEGER 
+dim g AS INTEGER 
+dim megagen AS INTEGER 
+dim megaprofit AS INTEGER 
+let s = 0
+let megagen=0
+let megaprofit=0
+let rw =0
+let gw = 0
+let bw = 0
+pbet = 0
+pmoney=0
+mrw = 0
+mgw = 0
+mbw = 0
+yt=0
+pg=0
+profit = 0
+x=1
+system.clearConsole
+print"each gen is 1 games played"
+print"each profit is one game played, and on a profit the AI does not advance its game (it does learn however)"
+print"a mega gen is 30,000 gens, the variable for a gen bugs out at 30,000"
+print"a mega profit is 30,000 profits, a profit is 125 credit"
+print"the profit percentage needs a mega gen and mega profit to work reliably"
+print""
+print"recommended amounts for rounds per print:"
+print"recommended amount is 12345 anything higher takes multiple seconds to compute"
+print"anything lower then 2000 will be unseeable as it runs too fast"
+print"how many rounds at a time?"
+input dogens
+call game
+
+sub game !the game + ai
+54!label for when it reaches end and also so it doesnt overflow error
+!large interval replacement
+if profit > 30000 then
+ megaprofit= megaprofit+1
+ profit = 0
+end if
+
+if gen > 30000 then
+ megagen = megagen + 1
+ gen = 0
+end if
+
+if money >124 then
+ profit = profit + 1
+ money = 0
+ pg= pg-1
+end if
+
+!replaces to large intervals again
+if mbw >30000 or mgw> 30000 or mrw > 30000 then
+ mbw=mbw/2
+ mrw=mrw/2
+ mgw=mgw/2
+end if
+if rw > 30000 or rw <-30000 then
+ rw = 0
+ mrw=mrw+1
+end if
+
+if rl > 300 then
+ rl = 0
+end if
+
+if bw > 30000 or bw<-30000 then
+ bw = 0
+ mbw=mbw+1
+end if
+
+if bl > 300 then
+ bl = 0
+end if
+
+if gw > 30000 or gw<-30000 then
+ gw = 0
+ mgw=mgw+1
+end if
+
+if gl > 300 then
+ gl = 0
+end if
+
+if money <= 0 then
+ let money = 100
+ gen = gen + 1
+end if 
+!—————- AI
+
+!this is just in case not used
+!let g = rnd(1)*3
+
+!now betting, it uses its win rate as a bet tool 
+
+if money>pmoney then
+ win= win +1
+ else 
+ win = 0
+ bet = pbet - 1
+end if
+
+if win > 0 then
+ bet = pbet + 1
+end if
+
+if bet <1 then
+ bet = 1
+end if 
+
+if bet >25 and money >75 then 
+ bet = 25
+end if
+
+pbet = bet
+pmoney = money
+!end of betting
+
+!the algorithm finds patterns that dont exist and it looks at the wins of a certain color
+!the win rate also has the momey it earns from bidding on that associated
+!the algorithm chooses between 2x the bet and reliable or 10x the bet but rare
+if gw>rw and gw>bw then
+ g = 1
+end if
+
+if rw>gw and rw>bw then
+ g = 2
+end if
+
+if bw>rw and bw>gw then
+ g = 3
+end if
+
+if mbw + mgw + mrw >99 then
+
+if mrw > mgw and mbw >brw then
+ g = 2
+end if
+
+if mbw >mrw and mbw > mgw then
+ g = 3
+end if
+
+if mgw > mbw and mgw >mrw then
+ g = 1
+end if
+
+if mbw = mrw then
+ g =1
+end if
+end if
+
+
+!if g =0 then
+!g=rnd(1)*5
+ !if g>3 then
+ ! g =3
+ ! end if
+ ! if g <1 then 
+!  g = 1
+ ! end if
+!end if
+!second half. betting only affects if it goes on green, if bet > 5 no green
+
+
+
+
+!algorithm done
+s = s + 1
+if s>dogens then
+if megagen >2 and megaprofit>0 then
+ percent = megaprofit/megagen
+else
+ percent = profit/gen
+end if
+
+system.clearConsole
+s = 0
+print"profits made " profit
+print"mega profits made " megaprofit
+print"profit percentage " percent
+PRINT "your current credit is " money
+print "your current gen is " gen
+print"mega gens completed is " megagen
+print"green value " mgw
+print"red value " mrw
+print"black value " mbw
+print"AI chose " g " as its guess "
+print"AI chose " bet " as its bet "
+
+end if
+if g>0 then
+money = money - bet
+end if
+
+rng = rnd(1)*20
+
+
+
+
+if rng>18 then
+if g = 1 then
+ money=money+(bet*10) 
+ gw = gw +bet*10
+  else if rng > 18 then
+   gw=gw+bet*2
+end if
+end if
+
+if 1<rng and rng<9.5 then
+if g = 2 then
+ money=money+(bet*2)
+ rw = rw +bet
+   else if 0<rng and rng<9.5 then
+   rw=rw+bet*2
+end if
+end if
+
+if  9.5<rng and rng<=18then
+if g = 3 then
+ money=money+(bet*2)
+ bw = bw+bet
+  else if 9.5<rng and rng<=18 then
+   bw = bw +bet*2
+end if
+end if
+
+
+goto 54
+
+
+
+
+
+end sub                 
